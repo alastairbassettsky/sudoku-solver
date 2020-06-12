@@ -1,0 +1,27 @@
+.sudokuGame {
+    text-align: center;
+    font-family: Verdana,sans-serif;
+}
+
+.sudokuGrid {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    width: min-content;
+    border: 3px solid rgba(0, 0, 0, 1);
+}
+
+.sudokuSquare {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    width: min-content;
+    border: 1px solid rgba(0, 0, 0, 1);
+}
+
+.numberInput {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    height: 60px;
+    width: 60px;
+    font-size: xx-large;
+    text-align: center;
+    font-family: Verdana,sans-serif;
+}
