@@ -1,13 +1,16 @@
-import React, {useState} from 'react';
-import {SudokuSquare} from "./SudokuSquare";
-import {Utils} from "./Utils";
+import React from 'react';
+import {SudokuGrid} from "./SudokuGrid";
 
 export const Sudoku = () => {
+    const verifySudoku = () => {
+        console.log("False");
+        return false;
+    };
+
     return (
-        <div className="sudokuGrid">
-            {Utils.range(0, 0).map(number =>
-                <SudokuSquare key={number}/>
-            )}
+        <div className="sudoku" key="sudoku">
+            <SudokuGrid/>
+            <input type="button" value="Check" onClick={verifySudoku}/>
         </div>
     )
 };

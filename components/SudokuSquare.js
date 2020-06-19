@@ -1,50 +1,63 @@
 import React, {useState} from 'react';
 import {Utils} from "./Utils";
 
-export const SudokuSquare = (key) => {
-    // const [singleValue, setSingleValue] = useState(5);
+export const SudokuSquare = (props) => {
     const [numbers, setNumbers] = useState(Array(9).fill(""));
+
+    const getCounts = () => {
+        let counts = {};
+        numbers.forEach(x => {
+            if (x !== "") counts[x] = (counts[x] || 0) + 1;
+        });
+
+        return counts;
+    };
+
+    const isSquareComplete = () => {
+        let counts = getCounts();
+        let size = 0;
+        for (let key in counts) {
+            if (counts.hasOwnProperty(key)) size++
+        }
+
+        return size === 9
+    };
+
+    const isSquareOkSoFar = () => {
+        let counts = getCounts();
+        for (let key in counts) {
+            let value = counts[key];
+            if (value > 1) return false
+        }
+
+        return true;
+    };
+
+    isSquareOkSoFar();
+    isSquareComplete();
 
     const onNumberEntry = (key, enteredNumber) => {
         if (enteredNumber.match("^[1-9]?$") != null) {
-            let newNumbers = numbers;
+            let newNumbers = Array.from(numbers);
             newNumbers[key] = enteredNumber;
 
-            console.log(newNumbers);
             setNumbers(newNumbers)
-            // setSingleValue(enteredNumber);
         }
     };
 
-    console.log("NUMBERS:");
-    console.log(numbers);
-
     return (
-        <div className="sudokuSquare" key={key}>
-            {Utils.range(0, 8).map(squareKey =>
-                    <input className="numberInput" type="text" key={squareKey} value={numbers[squareKey]}
-                           onChange={event => onNumberEntry(squareKey, event.target.value)}/>
-
-
-
-                //*<input className="numberInput" type="text" key={squareKey} value={singleValue}*//
-                //*       onChange={event => onNumberEntry(squareKey, event.target.value)}/>*//
-                // <NumberInput squareKey={squareKey} number={numbers[squareKey]} onNumberEntry={onNumberEntry}/>
+        <div className="sudokuSquare" key={props.majorKey}>
+            {Utils.range(0, 8).map(minorKey => {
+                    let key = props.majorKey.toString() + minorKey.toString();
+                    return <input
+                        className="numberInput"
+                        type="text"
+                        key={key}
+                        value={numbers[minorKey]}
+                        onChange={event => onNumberEntry(minorKey, event.target.value)}
+                    />
+                }
             )}
         </div>
     )
 };
-
-// const NumberInput = (props) => {
-//
-//     const onInputChange = (value) => {
-//         if (value.match("^[1-9]?$") != null) {
-//             props.onNumberEntry(props.squareKey, value)
-//         }
-//     };
-//
-//     return (
-//         <input className="numberInput" type="text" key={props.squareKey} value={props.number}
-//                onChange={event => onInputChange(event.target.value)}/>
-//     )
-// };
