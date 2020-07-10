@@ -7,7 +7,7 @@ export const SudokuGrid = (props) => {
         <div className="sudokuGrid" key="sudokuGrid">
             {Utils.range(0, 8).map(majorKey =>
                 <SudokuMajorSquare
-                    key={majorKey}
+                    key={"Major Key: " + majorKey}
                     majorKey={majorKey}
                     entries={props.entries[majorKey]}
                     onNumberEntry={props.onNumberEntry}

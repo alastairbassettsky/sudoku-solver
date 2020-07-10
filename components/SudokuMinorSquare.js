@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const SudokuMinorSquare = (props) => {
-    let key = props.majorKey.toString() + props.minorKey.toString();
+    let key = props.majorKey.toString() + "_" + props.minorKey.toString();
 
     const onNumberEntry = (enteredNumber) => {
         if (enteredNumber.match("^[1-9]?$") != null) {

@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import {SudokuGrid} from "./SudokuGrid";
 import {Utils} from "./Utils";
+import {fullSudoku} from "./Examples";
 
 export const Sudoku = () => {
-    const [entries, setEntries] = useState(Array(9).fill(Array(9).fill("")));
+    const [entries, setEntries] = useState(fullSudoku);
+    // const [entries, setEntries] = useState(Array(9).fill(Array(9).fill("")));
 
     const onNumberEntry = (majorKey, minorKey, enteredNumber) => {
         let numbers = entries[majorKey];
@@ -17,9 +19,10 @@ export const Sudoku = () => {
     };
 
     const verifySudoku = () => {
-        let goodSoFar = Utils.isSetOkSoFar(entries[0]);
-        let complete = Utils.isSetComplete(entries[0]);
+        let goodSoFar = Utils.isFullGridOkSoFar(entries);
+        let complete = Utils.isFullGridComplete(entries);
 
+        console.log("***** Verifying sudoku *****");
         console.log("Good so far?: " + goodSoFar);
         console.log("Complete?: " + complete);
 
