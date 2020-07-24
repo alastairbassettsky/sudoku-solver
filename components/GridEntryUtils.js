@@ -1,7 +1,13 @@
 import {GridEntry} from "./GridEntry";
 import {Utils} from "./Utils";
-import {MajorGridEntries, WholeGridEntries} from "./MajorGridEntries";
 import {fullSudoku} from "./Examples";
+
+export class MajorGridEntries extends Map {
+}
+
+export class WholeGridEntries extends Map {
+}
+
 
 export const GridEntryUtils = {
     initializeGrid: () => {

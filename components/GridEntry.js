@@ -6,6 +6,7 @@ export class GridEntry {
         this.minorGridKey = minorGridKey;
         this.xCoord = this.convertGridToXCoordinate(majorGridKey, minorGridKey);
         this.yCoord = this.convertGridToYCoordinate(majorGridKey, minorGridKey);
+        this.valid = true;
     }
 
     convertGridToXCoordinate(majorKey, minorKey) {

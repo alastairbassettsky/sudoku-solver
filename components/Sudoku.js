@@ -1,26 +1,23 @@
 import React, {useState} from 'react';
 import {SudokuGrid} from "./SudokuGrid";
-import {Utils} from "./Utils";
-import {fullSudoku} from "./Examples";
-import {GridEntry} from "./GridEntry";
 import {GridEntryUtils} from "./GridEntryUtils";
+import {ValidationUtils} from "./ValidationUtils";
 
 export const Sudoku = () => {
-    const [entries, setEntries] = useState(fullSudoku);
-    // const [entries, setEntries] = useState(Array(9).fill(Array(9).fill("")));
-
     const [gridEntries, setGridEntries] = useState(GridEntryUtils.initializeGrid);
 
     const onNumberEntry = (majorKey, minorKey, enteredNumber) => {
         let gridEntriesCopy = new Map(gridEntries);
-        let numbersInMajorSquare = gridEntriesCopy.get(majorKey);
-        let numberInMinorSquare = numbersInMajorSquare.get(minorKey);
-        numberInMinorSquare.value = enteredNumber;
+
+        let majorSquareEntries = gridEntriesCopy.get(majorKey);
+        let minorSquareEntry = majorSquareEntries.get(minorKey);
+        minorSquareEntry.value = enteredNumber;
 
         setGridEntries(gridEntriesCopy);
     };
 
     const verifySudoku = () => {
+        ValidationUtils.validateMinorGrid(gridEntries.get(0));
         // let goodSoFar = Utils.isFullGridOkSoFar(gridEntries);
         // let complete = Utils.isFullGridComplete(gridEntries);
         //
@@ -35,7 +32,7 @@ export const Sudoku = () => {
 
     return (
         <div className="sudoku" key="sudoku">
-            <SudokuGrid gridEntries={gridEntries} entries={entries} onNumberEntry={onNumberEntry}/>
+            <SudokuGrid gridEntries={gridEntries} onNumberEntry={onNumberEntry}/>
             <input type="button" value="Check" onClick={verifySudoku}/>
         </div>
     )

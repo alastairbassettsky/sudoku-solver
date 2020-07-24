@@ -3,8 +3,9 @@ export const Utils = {
 
     getCounts: (numbers) => {
         let counts = [];
+
         numbers.forEach(x => {
-            if (x !== "") counts[x] = (counts[x] || 0) + 1;
+            if (x.value !== "") counts[x.value] = (counts[x.value] || 0) + 1;
         });
 
         return counts;
@@ -52,6 +53,8 @@ export const Utils = {
                 badNumbers.add(entry);
             }
         }
+
+        console.log(badNumbers);
 
         return badNumbers;
     },

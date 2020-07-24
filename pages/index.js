@@ -7,7 +7,7 @@ export default function SudokuGame() {
         <div className="sudokuGame">
             <Head>
                 <title>Sudoku</title>
-                <link rel="icon" href="/favicon.ico"/>
+                <link rel="icon" href="/pencil.ico"/>
             </Head>
 
             <main>

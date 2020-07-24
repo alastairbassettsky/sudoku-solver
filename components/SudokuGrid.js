@@ -10,9 +10,8 @@ export const SudokuGrid = (props) => {
                 <SudokuMajorSquare
                     key={"Major Key: " + majorKey}
                     majorKey={majorKey}
-                    entries={props.entries[majorKey]}
+                    majorKeyEntries={props.gridEntries.get(majorKey)}
                     onNumberEntry={props.onNumberEntry}
-                    gridEntries={props.gridEntries.get(majorKey)}
                 />
             )}
         </div>
