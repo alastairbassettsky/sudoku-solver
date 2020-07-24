@@ -5,6 +5,9 @@ export const SudokuMinorSquare = (props) => {
 
     const onNumberEntry = (enteredNumber) => {
         if (enteredNumber.match("^[1-9]?$") != null) {
+            if (enteredNumber.length === 1){
+                enteredNumber = parseInt(enteredNumber)
+            }
             props.onNumberEntry(props.majorKey, props.minorKey, enteredNumber)
         }
     };
@@ -14,7 +17,7 @@ export const SudokuMinorSquare = (props) => {
             className="numberInput"
             type="text"
             key={key}
-            value={props.value}
+            value={props.gridValue.value}
             onChange={event => onNumberEntry(event.target.value)}
         />
     )

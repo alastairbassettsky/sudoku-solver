@@ -10,6 +10,7 @@ export const SudokuMajorSquare = (props) => {
                         majorKey={props.majorKey}
                         minorKey={minorKey}
                         value={props.entries[minorKey]}
+                        gridValue={props.gridEntries.get(minorKey)}
                         onNumberEntry={props.onNumberEntry}
                     />;
                 }

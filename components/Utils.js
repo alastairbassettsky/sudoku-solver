@@ -2,7 +2,7 @@ export const Utils = {
     range: (min, max) => Array.from({length: max - min + 1}, (_, i) => min + i),
 
     getCounts: (numbers) => {
-        let counts = {};
+        let counts = [];
         numbers.forEach(x => {
             if (x !== "") counts[x] = (counts[x] || 0) + 1;
         });
@@ -30,6 +30,32 @@ export const Utils = {
         return true;
     },
 
+    getBadEntries: (numbersInSet) => {
+        let badNumbers = Utils.getBadNumbers(numbersInSet);
+
+        var indexes = [], i = -1;
+        badNumbers.forEach(badNumber => {
+            while ((i = numbersInSet.indexOf(parseInt(badNumber), i + 1)) !== -1) {
+                indexes.push(i);
+            }
+        });
+
+        return indexes;
+    },
+
+    getBadNumbers: (numbersInSet) => {
+        let counts = Utils.getCounts(numbersInSet);
+        let badNumbers = new Set();
+        for (let entry in counts) {
+            let count = counts[entry];
+            if (count > 1) {
+                badNumbers.add(entry);
+            }
+        }
+
+        return badNumbers;
+    },
+
     isFullGridComplete: (numbersInGrid) => {
         for (let key in numbersInGrid) {
             if (!Utils.isSetComplete(numbersInGrid[key])) return false
@@ -44,5 +70,9 @@ export const Utils = {
         }
 
         return true;
+    },
+
+    splitGridIntoLines: (numbersInGrid) => {
+        
     },
 };
