@@ -1,16 +1,66 @@
 import {Utils} from "./Utils";
+import {GridEntryUtils} from "./GridEntryUtils";
 
 export const ValidationUtils = {
-    validateMinorGrid: (entries) => {
-        let badNumbers = Utils.getBadNumbers(entries);
+    validateWholeGrid: (entries) => {
+        let entriesCopy = new Map(entries);
 
-        entries.forEach(entry => {
-           if (badNumbers.has(entry.value)) {
-               entry.valid = false
-               //This doesn't work as we're directly manipulating entries istead of using setEntries (I think?)
-           }
+        //Squares
+        Utils.range(0, 8).forEach(majorSquareKey =>
+            entriesCopy.set(majorSquareKey, ValidationUtils.validateSetOfNine(entries.get(majorSquareKey)))
+        );
+
+        //Rows
+        let entriesCopyByRow = GridEntryUtils.groupEntriesByRow(entriesCopy);
+        Utils.range(0, 8).forEach(rowKey =>
+            entriesCopyByRow.set(rowKey, ValidationUtils.validateSetOfNine(entriesCopyByRow.get(rowKey)))
+        );
+
+        //Columns
+        let entriesCopyByColumn = GridEntryUtils.groupEntriesByColumn(entriesCopyByRow);
+        Utils.range(0, 8).forEach(columnKey =>
+            entriesCopyByColumn.set(columnKey, ValidationUtils.validateSetOfNine(entriesCopyByColumn.get(columnKey)))
+        );
+
+        //Return the result converted from grouped by columns to grouped by square
+        return GridEntryUtils.groupEntriesByGridFromColumn(entriesCopyByColumn);
+    },
+
+    validateSetOfNine: (entries) => {
+        let entriesCopy = new Map(entries);
+        let badNumbers = Utils.getBadNumbers(entriesCopy);
+
+        entriesCopy.forEach(entry => {
+            if (badNumbers.has(entry.value)) {
+                entry.valid = false
+            }
         });
 
-        console.log(entries);
-    }
+        return entriesCopy;
+    },
+
+    findBadEntries: (entries) => {
+        let badEntries = [];
+
+        Utils.range(0, 8).map(majorKey => {
+            let majorGridEntries = entries.get(majorKey);
+            Utils.range(0, 8).map(minorKey => {
+                let gridEntry = majorGridEntries.get(minorKey);
+                if (!gridEntry.valid) {
+                    badEntries.push(gridEntry);
+                }
+            })
+        });
+
+        return badEntries;
+    },
+
+    colourBadEntriesRed: (badEntries) => {
+        for (let key in badEntries) {
+            let badEntry = badEntries[key];
+            let gridKey = badEntry.majorGridKey + "_" + badEntry.minorGridKey;
+
+            document.getElementById(gridKey).style.color="#ff0000";
+        }
+    },
 };

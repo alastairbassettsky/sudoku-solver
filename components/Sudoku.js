@@ -17,17 +17,11 @@ export const Sudoku = () => {
     };
 
     const verifySudoku = () => {
-        ValidationUtils.validateMinorGrid(gridEntries.get(0));
-        // let goodSoFar = Utils.isFullGridOkSoFar(gridEntries);
-        // let complete = Utils.isFullGridComplete(gridEntries);
-        //
-        // // console.log("***** Verifying sudoku *****");
-        // // console.log("Good so far?: " + goodSoFar);
-        // // console.log("Complete?: " + complete);
-        //
-        // Utils.getBadEntries(gridEntries[0]);
-        //
-        // return complete;
+        setGridEntries(ValidationUtils.validateWholeGrid(gridEntries));
+
+        let badEntries = ValidationUtils.findBadEntries(gridEntries);
+
+        ValidationUtils.colourBadEntriesRed(badEntries);
     };
 
     return (

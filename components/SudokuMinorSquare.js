@@ -16,6 +16,7 @@ export const SudokuMinorSquare = (props) => {
         <input
             className="numberInput"
             type="text"
+            id={key}
             key={key}
             value={props.squareValue.value}
             onChange={event => onNumberEntry(event.target.value)}

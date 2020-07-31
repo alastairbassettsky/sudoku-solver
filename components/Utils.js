@@ -50,11 +50,9 @@ export const Utils = {
         for (let entry in counts) {
             let count = counts[entry];
             if (count > 1) {
-                badNumbers.add(entry);
+                badNumbers.add(parseInt(entry));
             }
         }
-
-        console.log(badNumbers);
 
         return badNumbers;
     },
