@@ -14,6 +14,9 @@ export const Sudoku = () => {
         minorSquareEntry.value = enteredNumber;
 
         setGridEntries(gridEntriesCopy);
+
+        let gridKey = minorSquareEntry.majorGridKey + "_" + minorSquareEntry.minorGridKey;
+        document.getElementById(gridKey).style.color="black";
     };
 
     const verifySudoku = () => {

@@ -5,6 +5,18 @@ export const ValidationUtils = {
     validateWholeGrid: (entries) => {
         let entriesCopy = new Map(entries);
 
+        //Default all entries' validity back to true
+        Utils.range(0, 8).forEach(majorSquareKey => {
+                let majorSquareEntries = entriesCopy.get(majorSquareKey);
+                Utils.range(0, 8).forEach(minorSquareKey => {
+                        majorSquareEntries.get(minorSquareKey).valid = true;
+                        let gridKey = majorSquareKey + "_" + minorSquareKey;
+                        document.getElementById(gridKey).style.color = "black";
+                    }
+                )
+            }
+        );
+
         //Squares
         Utils.range(0, 8).forEach(majorSquareKey =>
             entriesCopy.set(majorSquareKey, ValidationUtils.validateSetOfNine(entries.get(majorSquareKey)))
@@ -60,7 +72,7 @@ export const ValidationUtils = {
             let badEntry = badEntries[key];
             let gridKey = badEntry.majorGridKey + "_" + badEntry.minorGridKey;
 
-            document.getElementById(gridKey).style.color="#ff0000";
+            document.getElementById(gridKey).style.color = "red";
         }
     },
 };
