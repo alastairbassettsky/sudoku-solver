@@ -15,8 +15,9 @@ export default function SudokuGame() {
                     Sudoku solver
                 </h1>
 
-                <Sudoku/>
-
+                <div>
+                    <Sudoku/>
+                </div>
 
             </main>
         </div>

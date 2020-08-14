@@ -5,6 +5,7 @@
 
 .sudokuGrid {
     display: grid;
+    margin: auto;
     grid-template-columns: auto auto auto;
     width: min-content;
     border: 3px solid rgba(0, 0, 0, 1);
@@ -24,4 +25,5 @@
     font-size: xx-large;
     text-align: center;
     font-family: Verdana,sans-serif;
+    color: dimgray;
 }

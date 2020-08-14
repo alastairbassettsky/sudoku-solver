@@ -1,5 +1,6 @@
 import {Utils} from "./Utils";
 import {GridEntryUtils} from "./GridEntryUtils";
+import {ColourUtils} from "./ColourUtils";
 
 export const ValidationUtils = {
     validateWholeGrid: (entries) => {
@@ -9,9 +10,9 @@ export const ValidationUtils = {
         Utils.range(0, 8).forEach(majorSquareKey => {
                 let majorSquareEntries = entriesCopy.get(majorSquareKey);
                 Utils.range(0, 8).forEach(minorSquareKey => {
-                        majorSquareEntries.get(minorSquareKey).valid = true;
-                        let gridKey = majorSquareKey + "_" + minorSquareKey;
-                        document.getElementById(gridKey).style.color = "black";
+                        let minorGridEntry = majorSquareEntries.get(minorSquareKey);
+                        minorGridEntry.valid = true;
+                        ColourUtils.colourGridEntry(minorGridEntry, true);
                     }
                 )
             }
@@ -70,9 +71,20 @@ export const ValidationUtils = {
     colourBadEntriesRed: (badEntries) => {
         for (let key in badEntries) {
             let badEntry = badEntries[key];
-            let gridKey = badEntry.majorGridKey + "_" + badEntry.minorGridKey;
-
-            document.getElementById(gridKey).style.color = "red";
+            ColourUtils.colourGridEntry(badEntry, false);
         }
+    },
+
+    lockInAllPopulatedEntries: (entries) => {
+        Utils.range(0, 8).map(majorKey => {
+            let majorGridEntries = entries.get(majorKey);
+            Utils.range(0, 8).map(minorKey => {
+                let gridEntry = majorGridEntries.get(minorKey);
+                if (gridEntry.value) {
+                    gridEntry.fixed = true;
+                    ColourUtils.colourGridEntry(gridEntry, true);
+                }
+            })
+        });
     },
 };
