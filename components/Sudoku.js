@@ -6,6 +6,7 @@ import {ColourUtils} from "./ColourUtils";
 
 export const Sudoku = () => {
     const [gridEntries, setGridEntries] = useState(GridEntryUtils.initializeGrid);
+    const [checkEnabled, setCheckEnabled] = useState(false);
 
     const onNumberEntry = (majorKey, minorKey, enteredNumber) => {
         let gridEntriesCopy = new Map(gridEntries);
@@ -22,17 +23,23 @@ export const Sudoku = () => {
         }
     };
 
+    const verifySudoku = () => {
+        if (isSudokuCorrect() && ValidationUtils.isSudokuComplete(gridEntries)) {
+            ColourUtils.markGridAsComplete()
+        }
+    };
+
     const lockNumbers = () => {
         if(isSudokuCorrect()) {
             ValidationUtils.lockInAllPopulatedEntries(gridEntries);
+            document.getElementById("startButton").disabled = true;
+            setCheckEnabled(true);
         }
     };
 
     const isSudokuCorrect = () => {
         setGridEntries(ValidationUtils.validateWholeGrid(gridEntries));
-
         let badEntries = ValidationUtils.findBadEntries(gridEntries);
-
         ValidationUtils.colourBadEntriesRed(badEntries);
 
         return badEntries.length === 0
@@ -41,8 +48,8 @@ export const Sudoku = () => {
     return (
         <div className="sudoku" key="sudoku">
             <SudokuGrid gridEntries={gridEntries} onNumberEntry={onNumberEntry}/>
-            <input type="button" value="Start" onClick={lockNumbers}/>
-            <input type="button" value="Check" onClick={isSudokuCorrect}/>
+            <input id="startButton" type="button" value="Start" onClick={lockNumbers}/>
+            <input id="checkButton" type="button" disabled={!checkEnabled} value="Check" onClick={verifySudoku}/>
         </div>
     )
 };

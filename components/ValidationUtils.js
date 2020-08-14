@@ -87,4 +87,20 @@ export const ValidationUtils = {
             })
         });
     },
+
+    isSudokuComplete: (entries) => {
+        let complete = true;
+
+        Utils.range(0, 8).map(majorKey => {
+            let majorGridEntries = entries.get(majorKey);
+            Utils.range(0, 8).map(minorKey => {
+                let gridEntry = majorGridEntries.get(minorKey);
+                if (!gridEntry.value) {
+                    complete = false;
+                }
+            })
+        });
+
+        return complete;
+    }
 };
